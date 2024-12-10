@@ -8,6 +8,7 @@ from test.helper import *
     
 class TestMovie(unittest.TestCase):   
 
+    @unittest.mock.patch.dict(os.environ, {"TMDB_API_KEY": "abc"})
     def setUp(self):
         self.maxDiff = None
         with unittest.mock.patch.object(
@@ -15,11 +16,15 @@ class TestMovie(unittest.TestCase):
             ):
                 self.movie = Movie()
         
+    # As for python version > 3.11
+    # @classmethod
+    # def setUpClass(cls):
+    #     cls.enterClassContext(
+    #         unittest.mock.patch.dict(os.environ, {"TMDB_API_KEY": "abc"})
+    #     ) 
+
     @classmethod
     def setUpClass(cls):
-        cls.enterClassContext(
-            unittest.mock.patch.dict(os.environ, {"TMDB_API_KEY": "abc"})
-        )
         return super().setUpClass()
     
     """Test init function."""

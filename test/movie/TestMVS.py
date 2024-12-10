@@ -12,22 +12,32 @@ from src.music_user.user import User
 
 class TestMVS(unittest.TestCase):
     
+    @unittest.mock.patch.dict(os.environ, {
+                    "TMDB_API_KEY": "abc",
+                    "SPOTIFY_CLIENT_ID": "123",
+                    "SPOTIFY_CLIENT_SECRET": "456"
+                    }
+                )
     def setUp(self):
         with unittest.mock.patch.object(
             Movie, "test_api_connection", return_value=True
         ):
             self.mvs = MVS()
 
+    # As for python version > 3.11
+    # @classmethod
+    # def setUpClass(cls):
+    #     cls.enterClassContext(
+    #             unittest.mock.patch.dict(os.environ, {
+    #                 "TMDB_API_KEY": "abc",
+    #                 "SPOTIFY_CLIENT_ID": "123",
+    #                 "SPOTIFY_CLIENT_SECRET": "456"
+    #                 }
+    #             )
+    #         )
+
     @classmethod
     def setUpClass(cls):
-        cls.enterClassContext(
-            unittest.mock.patch.dict(os.environ, {
-                "TMDB_API_KEY": "abc",
-                "SPOTIFY_CLIENT_ID": "123",
-                "SPOTIFY_CLIENT_SECRET": "456"
-                }
-            )
-        )
         return super().setUpClass()
     
     """Test init function."""
