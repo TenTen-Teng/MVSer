@@ -7,6 +7,8 @@ from src.movie.movie import Movie
 from test.helper import *
     
 class TestMovie(unittest.TestCase):   
+    def __init__(self, methodName = "runTest"):
+        super().__init__(methodName)
 
     def setUp(self):
         self.maxDiff = None
