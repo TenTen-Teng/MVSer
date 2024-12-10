@@ -1,5 +1,6 @@
 import unittest
 import os
+import sys
 from unittest import mock
 import unittest.mock
 
@@ -17,9 +18,14 @@ class TestMovie(unittest.TestCase):
         
     @classmethod
     def setUpClass(cls):
-        cls.enterClassContext(
-            unittest.mock.patch.dict(os.environ, {"TMDB_API_KEY": "abc"})
-        )
+        if sys.version_info[:3] > (3, 10):
+            cls.enterClassContext(
+                unittest.mock.patch.dict(os.environ, {"TMDB_API_KEY": "abc"})
+            )
+        else:
+            with unittest.mock.patch.dict(os.environ, {"TMDB_API_KEY": "abc"}):
+                cls.assertEqual(os.environ['TMDB_API_KEY'], 'abc')
+
         return super().setUpClass()
     
     """Test init function."""
