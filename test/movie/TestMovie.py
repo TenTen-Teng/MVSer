@@ -1,6 +1,5 @@
 import unittest
 import os
-import sys
 from unittest import mock
 import unittest.mock
 
@@ -9,6 +8,7 @@ from test.helper import *
     
 class TestMovie(unittest.TestCase):   
 
+    @unittest.mock.patch.dict(os.environ, {"TMDB_API_KEY": "abc"})
     def setUp(self):
         self.maxDiff = None
         with unittest.mock.patch.object(
@@ -16,18 +16,15 @@ class TestMovie(unittest.TestCase):
             ):
                 self.movie = Movie()
         
+    # As for python version > 3.11
+    # @classmethod
+    # def setUpClass(cls):
+    #     cls.enterClassContext(
+    #         unittest.mock.patch.dict(os.environ, {"TMDB_API_KEY": "abc"})
+    #     ) 
+
     @classmethod
     def setUpClass(cls):
-        if sys.version_info[:3] > (3, 10):
-            cls.enterClassContext(
-                unittest.mock.patch.dict(os.environ, {"TMDB_API_KEY": "abc"})
-            )
-        else:
-            with unittest.mock.patch.dict(os.environ, {"TMDB_API_KEY": "abc"}):
-                print(
-                    f"We currently use python version {sys.version} for unit test."
-                    )
-
         return super().setUpClass()
     
     """Test init function."""
