@@ -3,6 +3,7 @@ from unittest import mock
 import unittest.mock
 from unittest.mock import call
 import os
+import sys
 
 from src.movie.mvs import MVS
 from src.movie.movie import Movie
@@ -20,14 +21,24 @@ class TestMVS(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.enterClassContext(
-            unittest.mock.patch.dict(os.environ, {
-                "TMDB_API_KEY": "abc",
-                "SPOTIFY_CLIENT_ID": "123",
-                "SPOTIFY_CLIENT_SECRET": "456"
-                }
+        if sys.version_info[:3] > (3, 10):
+            cls.enterClassContext(
+                unittest.mock.patch.dict(os.environ, {
+                    "TMDB_API_KEY": "abc",
+                    "SPOTIFY_CLIENT_ID": "123",
+                    "SPOTIFY_CLIENT_SECRET": "456"
+                    }
+                )
             )
-        )
+        else:
+            with unittest.mock.patch.dict(os.environ, {
+                    "TMDB_API_KEY": "abc",
+                    "SPOTIFY_CLIENT_ID": "123",
+                    "SPOTIFY_CLIENT_SECRET": "456"
+                    }):
+                print(
+                    f"We currently use python version {sys.version} for unit test."
+                    )
         return super().setUpClass()
     
     """Test init function."""

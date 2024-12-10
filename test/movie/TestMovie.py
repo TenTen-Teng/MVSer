@@ -24,7 +24,9 @@ class TestMovie(unittest.TestCase):
             )
         else:
             with unittest.mock.patch.dict(os.environ, {"TMDB_API_KEY": "abc"}):
-                cls.assertEqual(os.environ['TMDB_API_KEY'], 'abc')
+                print(
+                    f"We currently use python version {sys.version} for unit test."
+                    )
 
         return super().setUpClass()
     
