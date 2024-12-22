@@ -5,6 +5,8 @@
 
 **Please check [PyPi Link](https://pypi.org/project/MVSer/0.0.1/)**
 
+<!-- readme: contributors -start -->
+<!-- readme: contributors -end -->
 
 - [MVSer (Movie and Music Tracker)](#mvser-movie-and-music-tracker)
   - [Structure](#structure)
